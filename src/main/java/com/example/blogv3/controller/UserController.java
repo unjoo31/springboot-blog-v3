@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.blogv3.dto.JoinDTO;
+import com.example.blogv3.dto.LoginDTO;
 import com.example.blogv3.repository.UserRepository;
 
 @Controller
@@ -13,6 +14,18 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @PostMapping("/login")
+    public String login(LoginDTO loginDTO){
+        if(loginDTO.getUsername() == null || loginDTO.getUsername().isEmpty()){
+            return "redirect:/loginForm";
+        }
+        if(loginDTO.getPassword() == null || loginDTO.getPassword().isEmpty()){
+            return "redirect:/loginForm";
+        }
+        userRepository.select(loginDTO);
+        return "redirect:/";
+    }
 
     @PostMapping("/join")
     public String join(JoinDTO joinDTO){
