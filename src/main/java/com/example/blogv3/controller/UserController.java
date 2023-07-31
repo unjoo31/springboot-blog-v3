@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.blogv3.dto.JoinDTO;
 import com.example.blogv3.dto.LoginDTO;
+import com.example.blogv3.dto.UpdateDTO;
 import com.example.blogv3.repository.UserRepository;
 
 @Controller
@@ -14,6 +15,12 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @PostMapping("/user/update")
+    public String update(UpdateDTO updateDTO){
+        userRepository.update(updateDTO);
+        return "redirect:/loginForm";
+    }
 
     @PostMapping("/login")
     public String login(LoginDTO loginDTO){

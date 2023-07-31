@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.blogv3.dto.JoinDTO;
 import com.example.blogv3.dto.LoginDTO;
+import com.example.blogv3.dto.UpdateDTO;
 
 @Repository
 public class UserRepository {
@@ -30,5 +31,13 @@ public class UserRepository {
         query.setParameter("username", loginDTO.getUsername());
         query.setParameter("password", loginDTO.getPassword());
         query.getSingleResult();
+    }
+
+    @Transactional
+    public void update(UpdateDTO updateDTO){
+        Query query = em.createNativeQuery("update user_tb set password = :password where username = :username");
+        query.setParameter("username", updateDTO.getUsername());
+        query.setParameter("password", updateDTO.getPassword());
+        query.executeUpdate();
     }
 }
